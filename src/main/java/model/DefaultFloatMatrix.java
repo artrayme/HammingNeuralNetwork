@@ -1,12 +1,12 @@
 package model;
 
-import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 /**
  * @author artrayme
  * 11/5/21
  */
-public class DefaultFloatMatrix implements FloatMatrix{
+public class DefaultFloatMatrix implements FloatMatrix {
     public final int width;
     public final int height;
     private final float[][] matrix;
@@ -31,6 +31,33 @@ public class DefaultFloatMatrix implements FloatMatrix{
         }
     }
 
+    public DefaultFloatMatrix(Float[] vector) {
+        this.height = 1;
+        this.width = vector.length;
+        this.matrix = new float[height][width];
+        System.arraycopy(vector, 0, matrix[0], 0, vector.length);
+    }
+
+    public DefaultFloatMatrix(List<List<Float>> array) {
+        this.height = array.size();
+        this.width = array.get(0).size();
+        this.matrix = new float[height][width];
+        for (int i = 0; i < array.size(); i++) {
+            for (int j = 0; j < array.get(i).size(); j++) {
+                matrix[i][j] = array.get(i).get(j);
+            }
+        }
+    }
+
+    public DefaultFloatMatrix(List<Float> array, boolean b) {
+        this.height = 1;
+        this.width = array.size();
+        this.matrix = new float[height][width];
+        for (int i = 0; i < array.size(); i++) {
+            matrix[0][i] = array.get(i);
+        }
+    }
+
     @Override
     public FloatMatrix mult(FloatMatrix otherMatrix) {
         if (this.width != otherMatrix.getHeight())
@@ -47,7 +74,7 @@ public class DefaultFloatMatrix implements FloatMatrix{
     }
 
     @Override
-    public FloatMatrix sum(FloatMatrix otherMatrix) {
+    public FloatMatrix plus(FloatMatrix otherMatrix) {
         if (this.width != otherMatrix.getWidth())
             throw new IllegalArgumentException();
         if (this.height != otherMatrix.getHeight())
@@ -59,6 +86,55 @@ public class DefaultFloatMatrix implements FloatMatrix{
             }
         }
 
+        return result;
+    }
+
+    @Override
+    public FloatMatrix minus(FloatMatrix otherMatrix) {
+        if (this.width != otherMatrix.getWidth())
+            throw new IllegalArgumentException();
+        if (this.height != otherMatrix.getHeight())
+            throw new IllegalArgumentException();
+        DefaultFloatMatrix result = new DefaultFloatMatrix(width, height);
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                result.matrix[i][j] = matrix[i][j] - otherMatrix.toArray()[i][j];
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public FloatMatrix abs() {
+        DefaultFloatMatrix result = new DefaultFloatMatrix(width, height);
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                result.matrix[i][j] = Math.abs(matrix[i][j]);
+            }
+        }
+        return result;
+    }
+
+
+    @Override
+    public FloatMatrix absThis() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                matrix[i][j] = Math.abs(matrix[i][j]);
+            }
+        }
+        return this;
+    }
+
+    @Override
+    public double sum() {
+        double result = 0;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                result += matrix[i][j];
+            }
+        }
         return result;
     }
 

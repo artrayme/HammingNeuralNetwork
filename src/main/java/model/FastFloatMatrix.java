@@ -47,7 +47,7 @@ public class FastFloatMatrix implements FloatMatrix {
     }
 
     @Override
-    public FloatMatrix sum(FloatMatrix otherMatrix) {
+    public FloatMatrix plus(FloatMatrix otherMatrix) {
         if (this.width != otherMatrix.getWidth())
             throw new IllegalArgumentException();
         if (this.height != otherMatrix.getHeight())
@@ -60,6 +60,26 @@ public class FastFloatMatrix implements FloatMatrix {
         }
 
         return result;
+    }
+
+    @Override
+    public FloatMatrix minus(FloatMatrix otherMatrix) {
+        return null;
+    }
+
+    @Override
+    public FloatMatrix abs() {
+        return null;
+    }
+
+    @Override
+    public FloatMatrix absThis() {
+        return null;
+    }
+
+    @Override
+    public double sum() {
+        return 0;
     }
 
     @Override

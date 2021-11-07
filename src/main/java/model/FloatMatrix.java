@@ -7,7 +7,15 @@ package model;
 public interface FloatMatrix {
     FloatMatrix mult(FloatMatrix otherMatrix);
 
-    FloatMatrix sum(FloatMatrix otherMatrix);
+    FloatMatrix plus(FloatMatrix otherMatrix);
+
+    FloatMatrix minus(FloatMatrix otherMatrix);
+
+    FloatMatrix abs();
+
+    FloatMatrix absThis();
+
+    double sum();
 
     FloatMatrix scale(float scale);
 
