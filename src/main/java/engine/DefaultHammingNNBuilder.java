@@ -21,6 +21,7 @@ public class DefaultHammingNNBuilder {
     }
 
     public DefaultHammingNN createDefaultHammingNN() {
-        return new DefaultHammingNN(imageHeight, imageWidth, maxError);
+//        return new DefaultHammingNN(imageHeight, imageWidth, maxError);
+        return null;
     }
 }

@@ -1,12 +1,18 @@
 package engine;
 
+import model.FloatMatrix;
+
+import java.util.List;
+
 /**
  * @author artrayme
  * 11/5/21
  */
 public interface HammingNN {
 
-    void learnImage(boolean[][] image, int answer);
+    int getAnswerByImage(List<Float> image);
 
-    int getAnswerByImage(boolean[][] image);
+    FloatMatrix getPatterns();
+
+
 }
