@@ -3,7 +3,6 @@ package engine;
 import model.DefaultFloatMatrix;
 import model.FloatMatrix;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -42,7 +41,7 @@ public class DefaultHammingNN implements HammingNN {
         weights1 = new DefaultFloatMatrix(images);
         weights1.scale(0.5f);
         weights2 = new DefaultFloatMatrix(images.get(0).size(), images.get(0).size());
-        activationThreshold = (float) images.size() * 2;
+        activationThreshold = (float) images.get(0).size() * 2;
         initWeights2();
     }
 
@@ -66,17 +65,12 @@ public class DefaultHammingNN implements HammingNN {
         } else if (value > activationThreshold) {
             return activationThreshold;
         }
-        return value;
+        return value-81;
     }
 
     @Override
     public int getAnswerByImage(List<Float> image) {
         FloatMatrix firstLayerOutput = weights1.mult(new DefaultFloatMatrix(image, true).transpose());
-
-        for (int i = 0; i < firstLayerOutput.getHeight(); i++) {
-            firstLayerOutput.toArray()[i][0] += activationThreshold;
-        }
-
         FloatMatrix secondLayer = calcNewSecondLayerState(firstLayerOutput);
 
         double delta;
@@ -95,10 +89,6 @@ public class DefaultHammingNN implements HammingNN {
                 indexOfBestImage = j;
             }
         }
-//        List<Float> result = new ArrayList<>(weights1.toArray()[indexOfBestImage].length);
-//        for (int j = 0; j < weights1.toArray()[indexOfBestImage].length; j++) {
-//            result.add(weights1.toArray()[indexOfBestImage][j]);
-//        }
         return indexOfBestImage;
     }
 
@@ -107,14 +97,14 @@ public class DefaultHammingNN implements HammingNN {
         return weights1;
     }
 
-    private FloatMatrix calcNewSecondLayerState(FloatMatrix firstLayerState) {
-        FloatMatrix result = new DefaultFloatMatrix(1, firstLayerState.getHeight());
+    private FloatMatrix calcNewSecondLayerState(FloatMatrix lastState) {
+        FloatMatrix result = new DefaultFloatMatrix(1, lastState.getHeight());
         for (int i = 0; i < result.getHeight(); i++) {
             float sum = 0;
             for (int j = 0; j < weights2.getWidth(); j++) {
                 sum += weights2.toArray()[i][j];
             }
-            result.toArray()[i][0] = firstLayerState.toArray()[i][0] - sum;
+            result.toArray()[i][0] = lastState.toArray()[i][0] - sum;
         }
         return result;
     }
@@ -123,9 +113,20 @@ public class DefaultHammingNN implements HammingNN {
         FloatMatrix result = new DefaultFloatMatrix(1, secondLayerState.getHeight());
         for (int i = 0; i < secondLayerState.getHeight(); i++) {
             result.toArray()[i][0] = activation(secondLayerState.toArray()[i][0]);
+//                        result.toArray()[i][0] = (secondLayerState.toArray()[i][0]);
         }
         return result;
     }
 
-
+    private FloatMatrix calcFirstLayerState(List<Float> image) {
+        FloatMatrix result = new DefaultFloatMatrix(1, image.size());
+        for (int i = 0; i < image.size(); i++) {
+            float sum = 0;
+            for (int j = 0; j < weights1.getHeight(); j++) {
+                sum += weights1.toArray()[j][i];
+            }
+            result.toArray()[i][0] = sum + activationThreshold;
+        }
+        return result;
+    }
 }

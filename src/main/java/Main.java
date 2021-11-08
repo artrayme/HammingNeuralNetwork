@@ -23,15 +23,14 @@ public class Main {
         }
 
         List<Float> badImage = HammingImageUtil.imageToVectorConverter(
-                HammingImageUtil.loadImageFromResources(Objects.requireNonNull(Main.class.getResource("9x9/" + 1 + ".png"))
+                HammingImageUtil.loadImageFromResources(Objects.requireNonNull(Main.class.getResource("9x9/" + 2 + ".png"))
                 ));
 
         List<Float> goodImage = HammingImageUtil.imageToVectorConverter(
                 HammingImageUtil.loadImageFromResources(Objects.requireNonNull(Main.class.getResource("dataset/9x9/" + 4 + ".png"))
                 ));
 
-        HammingNN hammingNN = new DefaultHammingNN(images, 0.1);
-        //        hammingNN.printAllCorrectImages();
+        HammingNN hammingNN = new DefaultHammingNN(images, 0.2);
         var res = hammingNN.getAnswerByImage(badImage);
         System.out.println("Image number " + res);
 //        HammingImageUtil.printAllCorrectImages(hammingNN);
