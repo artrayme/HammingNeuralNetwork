@@ -14,14 +14,6 @@ public class ImprovedHammingNN implements HammingNN {
 
     private final double maxError;
 
-    /**
-     * T_k = n/2, k=0..m-1;
-     * But activation threshold same for all images
-     * cause images has same length (n)
-     */
-    private final float activationThreshold;
-
-
     private final FloatMatrix weights1;
     private final FloatMatrix weights2;
 
@@ -30,7 +22,6 @@ public class ImprovedHammingNN implements HammingNN {
         weights1 = new DefaultFloatMatrix(images);
         weights1.scale(0.5f);
         weights2 = new DefaultFloatMatrix(images.size(), images.size());
-        activationThreshold = (float) images.get(0).size() /2;
         initWeights2();
     }
 
@@ -50,16 +41,13 @@ public class ImprovedHammingNN implements HammingNN {
     @Override
     public int getAnswerByImage(List<Float> image) {
         FloatMatrix firstLayerOutput = weights1.mult(new DefaultFloatMatrix(image, true).transpose());
-        FloatMatrix secondLayer = firstLayerOutput;
-        double currentError = 0;
-        do {
-            FloatMatrix newMatrix = weights2.mult(secondLayer);
-            currentError = secondLayer.minus(newMatrix).sum()/image.size();
-            secondLayer = newMatrix;
-            System.out.println("Current error = " + currentError);
-        }while (currentError>maxError );
+        var secondLayer = getSecondLayerResult(image, firstLayerOutput);
         System.out.println(secondLayer);
 
+        return getIndexOfBestImage(secondLayer);
+    }
+
+    private int getIndexOfBestImage(FloatMatrix secondLayer) {
         int indexOfBestImage = 0;
         float lastMax = 0f;
         for (int j = 0; j < secondLayer.getHeight(); j++) {
@@ -68,14 +56,22 @@ public class ImprovedHammingNN implements HammingNN {
                 indexOfBestImage = j;
             }
         }
-        System.err.println(indexOfBestImage);
         return indexOfBestImage;
+    }
 
-
+    private FloatMatrix getSecondLayerResult(List<Float> image, FloatMatrix secondLayer) {
+        double currentError = 0;
+        do {
+            FloatMatrix newMatrix = weights2.mult(secondLayer);
+            currentError = secondLayer.minus(newMatrix).sum() / image.size();
+            secondLayer = newMatrix;
+            System.out.println("Current error = " + currentError);
+        } while (currentError > maxError);
+        return secondLayer;
     }
 
     @Override
     public FloatMatrix getPatterns() {
-        return null;
+        return weights1;
     }
 }
