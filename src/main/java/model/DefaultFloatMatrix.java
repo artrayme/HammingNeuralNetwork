@@ -74,7 +74,7 @@ public class DefaultFloatMatrix implements FloatMatrix {
     }
 
     @Override
-    public FloatMatrix plus(FloatMatrix otherMatrix) {
+    public FloatMatrix plusThis(FloatMatrix otherMatrix) {
         if (this.width != otherMatrix.getWidth())
             throw new IllegalArgumentException();
         if (this.height != otherMatrix.getHeight())
@@ -88,6 +88,15 @@ public class DefaultFloatMatrix implements FloatMatrix {
 
         return result;
     }
+
+    @Override
+    public FloatMatrix plusThis(float scalar) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                matrix[i][j] += scalar;
+            }
+        }
+        return this;    }
 
     @Override
     public FloatMatrix minus(FloatMatrix otherMatrix) {

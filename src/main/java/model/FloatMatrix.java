@@ -7,7 +7,8 @@ package model;
 public interface FloatMatrix {
     FloatMatrix mult(FloatMatrix otherMatrix);
 
-    FloatMatrix plus(FloatMatrix otherMatrix);
+    FloatMatrix plusThis(FloatMatrix otherMatrix);
+    FloatMatrix plusThis(float scalar);
 
     FloatMatrix minus(FloatMatrix otherMatrix);
 

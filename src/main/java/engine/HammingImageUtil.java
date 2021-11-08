@@ -51,11 +51,15 @@ public class HammingImageUtil {
         System.out.println("All correct IMAGES:");
         for (int indexImage = 0; indexImage < weights1.getHeight(); indexImage++) {
             System.out.println("Image №" + (indexImage));
-            for (int indexPixel = 0; indexPixel < weights1.getWidth(); indexPixel++) {
-                System.out.print(weights1.toArray()[indexImage][indexPixel] == 1 ? ".  " : "#  ");
-                if ((indexPixel + 1) % 9 == 0) {
-                    System.out.println();
-                }
+            printOneImage(weights1, indexImage);
+        }
+    }
+
+    public static void printOneImage(FloatMatrix weights1, int indexImage) {
+        for (int indexPixel = 0; indexPixel < weights1.getWidth(); indexPixel++) {
+            System.out.print(weights1.toArray()[indexImage][indexPixel] == 1 ? ".  " : "#  ");
+            if ((indexPixel + 1) % 9 == 0) {
+                System.out.println();
             }
         }
     }
