@@ -138,11 +138,13 @@ public class ImprovedHammingNN implements HammingNN {
      */
     private FloatMatrix getSecondLayerResult(List<Float> image, FloatMatrix secondLayer) {
         double currentError = 0;
+        int currentGeneration = 0;
         do {
             FloatMatrix newMatrix = weights2.mult(secondLayer);
             currentError = secondLayer.minus(newMatrix).sum() / image.size();
             secondLayer = newMatrix;
-            System.out.println("Current error = " + currentError);
+            currentGeneration++;
+            System.out.println("Current generation = " + currentGeneration +", current error = " + currentError);
         } while (currentError > maxError);
         return secondLayer;
     }

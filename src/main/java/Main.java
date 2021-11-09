@@ -23,7 +23,7 @@ public class Main {
         }
 
         List<Float> badImage = HammingImageUtil.imageToVectorConverter(
-                HammingImageUtil.loadImageFromResources(Objects.requireNonNull(Main.class.getResource("9x9/" + 2 + ".png"))
+                HammingImageUtil.loadImageFromResources(Objects.requireNonNull(Main.class.getResource("9x9/" + 1 + ".png"))
                 ));
 
         HammingNN hammingNN = new ImprovedHammingNN(images, 0.1f);
