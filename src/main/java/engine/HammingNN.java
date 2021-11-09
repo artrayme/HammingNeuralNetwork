@@ -10,9 +10,17 @@ import java.util.List;
  */
 public interface HammingNN {
 
+    /**
+     * Main image recognition method.
+     *
+     * @param image an is unknown image
+     * @return index of the most similar known image
+     */
     int getAnswerByImage(List<Float> image);
 
+    /**
+     * @return matrix of learned images
+     */
     FloatMatrix getPatterns();
-
 
 }

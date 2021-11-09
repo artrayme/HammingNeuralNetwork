@@ -93,12 +93,6 @@ public class ImprovedHammingNN implements HammingNN {
         }
     }
 
-    /**
-     * Main image recognition method.
-     *
-     * @param image an is unknown image
-     * @return index of the most similar known image
-     */
     @Override
     public int getAnswerByImage(List<Float> image) {
         if (image.size() != weights1.getWidth())
