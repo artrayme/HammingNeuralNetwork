@@ -8,6 +8,7 @@ public interface FloatMatrix {
     FloatMatrix mult(FloatMatrix otherMatrix);
 
     FloatMatrix plusThis(FloatMatrix otherMatrix);
+
     FloatMatrix plusThis(float scalar);
 
     FloatMatrix minus(FloatMatrix otherMatrix);
