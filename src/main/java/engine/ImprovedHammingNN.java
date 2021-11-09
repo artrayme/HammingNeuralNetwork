@@ -97,7 +97,7 @@ public class ImprovedHammingNN implements HammingNN {
     public int getAnswerByImage(List<Float> image) {
         if (image.size() != weights1.getWidth())
             throw new IllegalArgumentException("Passed image size = " + image.size()
-                    + ". But this NN can only work with images of size" + weights1.getWidth());
+                    + ". But this NN can only work with images of size " + weights1.getWidth());
         FloatMatrix firstLayerOutput = weights1.mult(new DefaultFloatMatrix(image, true).transpose());
         var secondLayer = getSecondLayerResult(image, firstLayerOutput);
         System.out.println(secondLayer);
@@ -144,7 +144,7 @@ public class ImprovedHammingNN implements HammingNN {
             currentError = secondLayer.minus(newMatrix).sum() / image.size();
             secondLayer = newMatrix;
             currentGeneration++;
-            System.out.println("Current generation = " + currentGeneration +", current error = " + currentError);
+            System.out.println("Current generation = " + currentGeneration + ", current error = " + currentError);
         } while (currentError > maxError);
         return secondLayer;
     }
