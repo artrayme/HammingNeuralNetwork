@@ -1,4 +1,4 @@
-import engine.HammingImageUtil;
+import util.HammingImageUtil;
 import engine.HammingNN;
 import engine.ImprovedHammingNN;
 

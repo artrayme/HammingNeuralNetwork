@@ -1,5 +1,6 @@
-package engine;
+package util;
 
+import engine.HammingNN;
 import model.FloatMatrix;
 
 import javax.imageio.ImageIO;
