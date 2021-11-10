@@ -141,11 +141,27 @@ public class ImprovedHammingNN implements HammingNN {
         int currentGeneration = 0;
         do {
             FloatMatrix newMatrix = weights2.mult(secondLayer);
+            newMatrix = activateAllNeurones(newMatrix);
             currentError = secondLayer.minus(newMatrix).sum() / image.size();
             secondLayer = newMatrix;
             currentGeneration++;
             System.out.println("Current generation = " + currentGeneration + ", current error = " + currentError);
         } while (currentError > maxError);
         return secondLayer;
+    }
+
+    private FloatMatrix activateAllNeurones(FloatMatrix layer){
+        FloatMatrix result = new DefaultFloatMatrix(layer.getWidth(), layer.getHeight());
+        for (int i = 0; i < layer.getWidth(); i++) {
+            for (int j = 0; j < layer.getHeight(); j++) {
+                result.toArray()[j][i] = activationFunction(layer.toArray()[j][i]);
+            }
+        }
+        return result;
+    }
+
+    private float activationFunction(float value){
+        if (value<0) return 0;
+        return value;
     }
 }
