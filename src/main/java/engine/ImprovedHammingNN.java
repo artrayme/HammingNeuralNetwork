@@ -150,7 +150,7 @@ public class ImprovedHammingNN implements HammingNN {
         return secondLayer;
     }
 
-    private FloatMatrix activateAllNeurones(FloatMatrix layer){
+    private FloatMatrix activateAllNeurones(FloatMatrix layer) {
         FloatMatrix result = new DefaultFloatMatrix(layer.getWidth(), layer.getHeight());
         for (int i = 0; i < layer.getWidth(); i++) {
             for (int j = 0; j < layer.getHeight(); j++) {
@@ -160,8 +160,10 @@ public class ImprovedHammingNN implements HammingNN {
         return result;
     }
 
-    private float activationFunction(float value){
-        if (value<0) return 0;
+    //   Linear activation function with negative values truncated
+    private float activationFunction(float value) {
+        if (value < 0)
+            return 0;
         return value;
     }
 }

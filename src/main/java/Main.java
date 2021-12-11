@@ -1,6 +1,6 @@
-import util.HammingImageUtil;
 import engine.HammingNN;
 import engine.ImprovedHammingNN;
+import util.HammingImageUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,10 +22,10 @@ public class Main {
                     )));
         }
 
-        List<Float> badImage = HammingImageUtil.imageToVectorConverter(
-                HammingImageUtil.loadImageFromResources(Objects.requireNonNull(Main.class.getResource("9x9/" + 1 + ".png"))
+        List<Float> badImage;
+        badImage = HammingImageUtil.imageToVectorConverter(
+                HammingImageUtil.loadImageFromResources(Objects.requireNonNull(Main.class.getResource("9x9/" + 3 + ".png"))
                 ));
-
         HammingNN hammingNN = new ImprovedHammingNN(images, 0.1f);
         var res = hammingNN.getAnswerByImage(badImage);
         System.out.println("Image number " + res);
