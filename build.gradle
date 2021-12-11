@@ -1,11 +1,7 @@
 plugins {
     id 'java'
+    id 'application'
 }
-
-//compileJava{
-//    options.compilerArgs += ["--add-modules", 'jdk.incubator.vector']
-//    options.compilerArgs += ["--add-modules", 'jdk.incubator.foreign']
-//}
 
 group 'org.artrayme'
 version '1.0-SNAPSHOT'
@@ -22,3 +18,5 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+application.mainClassName 'Main'
